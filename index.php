@@ -18,7 +18,6 @@ class Stopwatch
         self::start();
     }
 }
-
 $products = 100;
 
 $servername = "localhost";
