@@ -18,6 +18,7 @@ class Stopwatch
         self::start();
     }
 }
+
 $products = 100;
 
 $servername = "localhost";
@@ -26,75 +27,98 @@ $password = "";
 $dbname = "products";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $query = "INSERT INTO vendor(name) VALUES";
-
 $a = 1;
 while ($a <= 10) {
-    $query = $query." (".random_bytes(5)."),";
+    $query .= " ('" . bin2hex(random_bytes(5)) . "'),";
     $a++;
 }
-$query = $query.";";
+$query = rtrim($query, ',') . ";";
 
-$query2 = "INSERT INTO product(name, vendor_id) VALUES"
-
+$query2 = "INSERT INTO product(name, vendor_id) VALUES";
 $a = 1;
 while ($a <= $products) {
-    $query = $query." (".random_bytes(6).", 1),";
+    $query2 .= " ('" . bin2hex(random_bytes(6)) . "', 1),";
     $a++;
 }
-$query = $query.";";
+$query2 = rtrim($query2, ',') . ";";
 
 Stopwatch::start();
 $conn->query($query);
 $conn->query($query2);
 Stopwatch::stop();
-// ----------
+
+$result = $conn->query("SELECT * FROM vendor");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
+$result = $conn->query("SELECT * FROM product");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
 
 $query = "INSERT INTO vendor(name) VALUES";
-
 $a = 1;
 while ($a <= 100) {
-    $query = $query." (".random_bytes(5)."),";
+    $query .= " ('" . bin2hex(random_bytes(5)) . "'),";
     $a++;
 }
-$query = $query.";";
+$query = rtrim($query, ',') . ";";
 
-$query2 = "INSERT INTO product(name, vendor_id) VALUES"
-
+$query2 = "INSERT INTO product(name, vendor_id) VALUES";
 $a = 1;
 while ($a <= $products) {
-    $query = $query." (".random_bytes(6).", 1),";
+    $query2 .= " ('" . bin2hex(random_bytes(6)) . "', 1),";
     $a++;
 }
-$query = $query.";";
+$query2 = rtrim($query2, ',') . ";";
 
 Stopwatch::start();
 $conn->query($query);
 $conn->query($query2);
 Stopwatch::stop();
-// ----------
+
+$result = $conn->query("SELECT * FROM vendor");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
+$result = $conn->query("SELECT * FROM product");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
 
 $query = "INSERT INTO vendor(name) VALUES";
-
 $a = 1;
 while ($a <= 1000) {
-    $query = $query." (".random_bytes(5)."),";
+    $query .= " ('" . bin2hex(random_bytes(5)) . "'),";
     $a++;
 }
-$query = $query.";";
+$query = rtrim($query, ',') . ";";
 
-$query2 = "INSERT INTO product(name, vendor_id) VALUES"
-
+$query2 = "INSERT INTO product(name, vendor_id) VALUES";
 $a = 1;
 while ($a <= $products) {
-    $query = $query." (".random_bytes(6).", 1),";
+    $query2 .= " ('" . bin2hex(random_bytes(6)) . "', 1),";
     $a++;
 }
-$query = $query.";";
+$query2 = rtrim($query2, ',') . ";";
 
 Stopwatch::start();
 $conn->query($query);
 $conn->query($query2);
 Stopwatch::stop();
-// ----------
+
+$result = $conn->query("SELECT * FROM vendor");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
+$result = $conn->query("SELECT * FROM product");
+while ($row = $result->fetch_assoc()) {
+    print_r($row);
+}
+
+$conn->close();
